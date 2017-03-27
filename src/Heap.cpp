@@ -8,37 +8,45 @@
 
 #include <iostream>
 #include <climits>
+#include <stdlib.h>
+
 using namespace std;
 
 void swap(int *x, int *y);
 
 class MaxHeap{
+
+public:
+
 	int *heapArr;
 	int capacity;
 	int heapSize;
 
-public:
 	//Constructor
 	MaxHeap(int capacity);
 
 	//Heapify subtree with given index
-	void MaxHeapify(int);
+	void MaxHeapify(int, int);
 
 	int parent(int i)	{	return (i-1)/2;	}
 	int left(int i)		{	return 2*i+1; 	}
 	int right(int i)	{	return 2*i+2; 	}
 
-	//extract the Minimum ( root )
+	//extract the Maximum ( root )
 	int extractMax();
 
 	void increaseKey(int i, int new_val);
 
-	//return the Minimum ( root )
+	//return the Maximum ( root )
 	int getMax(){ return heapArr[0]; }
 
 	void deleteKey(int i);
 
 	void insertKey(int k);
+
+	void heapSort();
+
+	void printHeapArray();
 
 };
 
@@ -64,7 +72,7 @@ void MaxHeap::insertKey(int key){	//Insert a new key in the heap
 	}
 }
 
-void MaxHeap::increaseKey(int i, int newValue){		// Decrease the value of element which have index i
+void MaxHeap::increaseKey(int i, int newValue){		// Increases the value of element which have index i
 	heapArr[i]=newValue;
 	while(i!=0 && heapArr[parent(i)] < heapArr[i]){
 		swap(&heapArr[i], &heapArr[parent(i)]);
@@ -72,7 +80,7 @@ void MaxHeap::increaseKey(int i, int newValue){		// Decrease the value of elemen
 	}
 }
 
-int MaxHeap::extractMax(){			// remove the smallest element ( root ) from the heap.
+int MaxHeap::extractMax(){			// remove the biggest element ( root ) from the heap.
 	if(heapSize <= 0)
 		return INT_MIN;
 //	if(heapSize==1){
@@ -80,11 +88,11 @@ int MaxHeap::extractMax(){			// remove the smallest element ( root ) from the he
 //		return heapArr[0];
 //	}
 
-	// stores the minimum value, and remove it from the heap, then return it.
+	// stores the maximum value, and remove it from the heap, then return it.
 	int root=heapArr[0];
 	heapArr[0]=heapArr[heapSize-1];
 	heapSize--;
-	MaxHeapify(0);
+	MaxHeapify(0, heapSize);
 
 	return root;
 }
@@ -95,18 +103,19 @@ void MaxHeap::deleteKey(int i){		// Delete a key at index i
 	extractMax();
 }
 
-void MaxHeap::MaxHeapify(int i){	// Heapify a sub tree with given index i
+void MaxHeap::MaxHeapify(int i, int n){	// Heapify a sub tree with given index i, n is the size of the heap
+
 	int l=left(i);
 	int r=right(i);
 	int biggest=i;
 
-	if(l < heapSize && heapArr[l] > heapArr[i])
+	if(l < n && heapArr[l] > heapArr[i])
 		biggest=l;
-	if(r < heapSize && heapArr[r] > heapArr[biggest])
+	if(r < n && heapArr[r] > heapArr[biggest])
 		biggest=r;
 	if(biggest != i){
 		swap(&heapArr[i], &heapArr[biggest]);
-		MaxHeapify(biggest);
+		MaxHeapify(biggest, n);
 	}
 }
 
@@ -119,41 +128,35 @@ void swap(int *x, int *y){
 }
 
 
+void MaxHeap::heapSort(){
+
+	for(int i=heapSize-1; i>=0; i--){
+		swap(heapArr[0], heapArr[i]);
+		MaxHeapify(0, i);
+	}
+}
+
+void MaxHeap::printHeapArray(){
+	for(int i=0; i<heapSize; i++){
+		cout << heapArr[i] << " ";
+	}
+	cout << endl;
+}
+
+
 int main() {
-	MaxHeap heap(11);
 
-//	heap.insertKey(3);
-//    heap.insertKey(2);
-//    heap.deleteKey(1);
-//    heap.insertKey(15);
-//    heap.insertKey(5);
-//    heap.insertKey(4);
-//    heap.insertKey(45);
-//    cout << heap.extractMax() << " ";
-//    cout << heap.getMax() <<	 " ";
-//    heap.increaseKey(2, 1);
-//    cout << heap.getMax();
+	MaxHeap heap(1000);
 
-	heap.insertKey(35);
-	heap.insertKey(33);
-	heap.insertKey(42);
-	heap.insertKey(10);
-	heap.insertKey(14);
-	heap.insertKey(19);
-	heap.insertKey(27);
-	heap.insertKey(44);
-	heap.insertKey(26);
-	heap.insertKey(31);
-
-	heap.deleteKey(0);
-	heap.deleteKey(0);
-
-
-	for(int i=0; i<8; i++){
-		cout << heap.extractMax() << " ";
-
+	for(int i=0; i<100; i++){
+		heap.insertKey(rand()%1000);
 	}
 
+	heap.printHeapArray();
+
+	heap.heapSort();
+
+	heap.printHeapArray();
 
 	return 0;
 }
