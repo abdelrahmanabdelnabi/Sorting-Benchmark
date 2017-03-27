@@ -33,5 +33,7 @@ times = [0.01, 0.02, 0.04, 0.09, 0.16, 0.25]
 
 for x in range(int(i)):
 	plt.scatter(input_sizes, duration_matrix[x])
-	plt.plot(input_sizes, duration_matrix[x])
+	plt.plot(input_sizes, duration_matrix[x], label=sorting_names[x])
+
+plt.legend(loc='upper left')
 plt.show()
