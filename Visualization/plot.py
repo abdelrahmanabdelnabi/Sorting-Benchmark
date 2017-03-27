@@ -36,4 +36,7 @@ for x in range(int(i)):
 	plt.plot(input_sizes, duration_matrix[x], label=sorting_names[x])
 
 plt.legend(loc='upper left')
+plt.suptitle('Sorting Benchmark', fontsize=20)
+plt.xlabel('input array size (n)', fontsize=16)
+plt.ylabel('execution time (ms)', fontsize=16)
 plt.show()
