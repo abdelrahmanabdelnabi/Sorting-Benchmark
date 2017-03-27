@@ -1,0 +1,11 @@
+input file format:
+file name: "plot.txt"
+
+line 1: a number i, representing the number of sorting algorithms (plots) to be drawn
+
+line 2: a number n, the number of points
+
+i pairs of lines follow (2*i lines)
+
+the first of the pair is the name of the algorithm
+the second line has n numbers, the times taken by the algorithm for each input
