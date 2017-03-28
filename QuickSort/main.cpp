@@ -53,24 +53,28 @@ int main(void) {
 	int test_sizes[] = { 10000, 50000, 100000, 300000, 500000, 600000 };
 
 	int inputNumbers[700000];
+	for (int j = 0; j < 6; j++) {
 
-	for (int x = 0; x < tests; x++) {
-		inputNumbers[x] = rand() % 1000000;
+		for (int x = 0; x < test_sizes[j]; x++) {
+			inputNumbers[x] = rand() % 1000000;
+		}
 
 		clock_t begin = clock();
 
-		quickSort(inputNumbers, 0, test_sizes[x]);
+		quickSort(inputNumbers, 0, test_sizes[j]);
 
 		clock_t end = clock();
 
-		double time = (double)(end - begin) / CLOCKS_PER_SEC;
+		double time = (double) (end - begin) / CLOCKS_PER_SEC;
 		cout << time * 1000 << " ";
 
-		for(int i = 0; i <  test_sizes[i]; i++) {
+		for (int i = 0; i < test_sizes[i]; i++) {
 			cout << inputNumbers[i] << " ";
 		}
 	}
 
-	cout << endl;
+}
+
+cout << endl;
 
 }
