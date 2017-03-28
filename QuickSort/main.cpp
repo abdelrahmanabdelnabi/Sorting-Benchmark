@@ -45,63 +45,32 @@ void sort(int array[]) {
 }
 
 int main(void) {
-	int testArray[] = { 90, 44, 6, 72, 3, 1, 23, 15, 80, 0 };
-
-	sort(testArray);
-
-	for (int i = 0; i < sizeof(testArray) / sizeof(int); i++) {
-		cout << testArray[i] << " ";
-	}
-
 	int algos = 6;
-	// input sizes: 1000, 10000, 50000, 100000, 300000, 500000
 	int tests = 6;
 
-	int test_sizes[] = { 1000, 10000, 50000, 100000, 300000, 500000 };
+	cout << "quicksort" << endl;
 
-	int durations[6][6];
+	int test_sizes[] = { 10000, 50000, 100000, 300000, 500000, 600000 };
 
-	char names[][] = { "insertion", "selection", "bubble", "heap", "merge",
-			"quick" };
+	int inputNumbers[700000];
 
-	for (int i = 0; i < 6; i++) {
-		// generate a random array of size test_sizes[i]
-		int inputNumbers[];
+	for (int x = 0; x < tests; x++) {
+		inputNumbers[x] = rand() % 1000000;
 
-		for(int x = 0; x < test_sizes[i]; i++) {
-			inputNumbers[i] = rand() % 1000000;
-		}
+		clock_t begin = clock();
 
-		for (int j = 0; j < 6; j++) {
-			// measure execution time of jth algorithm
-			int duration;
+		quickSort(inputNumbers, 0, test_sizes[x]);
 
-			// add to duration matrix
-			durations[i][j] = duration;
+		clock_t end = clock();
+
+		double time = (double)(end - begin) / CLOCKS_PER_SEC;
+		cout << time * 1000 << " ";
+
+		for(int i = 0; i <  test_sizes[i]; i++) {
+			cout << inputNumbers[i] << " ";
 		}
 	}
 
-	ofstream myfile;
-	myfile.open("times.txt");
-	myfile << "Writing this to a file.\n";
-	myfile.close();
-
-	myfile << algos << endl;
-	myfile << tests << endl;
-
-	for(int i = 0; i < tests; i++){
-		myfile << test_sizes[i] << " ";
-	}
-
-	myfile << endl;
-
-	for (int i = 0; i < algos; i++) {
-		myfile << names[i] << endl;
-		for(int j = 0; j < tests; i++) {
-			myfile << durations[j][i] << " ";
-		}
-
-		myfile << endl;
-	}
+	cout << endl;
 
 }
